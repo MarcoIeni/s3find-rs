@@ -13,6 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
+    env:
+      RUST_BACKTRACE: 1
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -21,8 +23,12 @@ jobs:
           override: true
         if: matrix.os == 'macOS-latest'
       - name: build
-        run: cargo build --verbose
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --verbose
       - name: test
-        run: cargo test --no-fail-fast --verbose --all -- --nocapture
-        env:
-          RUST_BACKTRACE: 1
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --no-fail-fast --verbose --all -- --nocapture
