@@ -788,8 +788,7 @@ mod tests {
 
         assert_eq!(contents, test_data);
 
-        remove_dir_all(&target).unwrap();
-        Ok(())
+        remove_dir_all(&target)
     }
 
     #[tokio::test]
